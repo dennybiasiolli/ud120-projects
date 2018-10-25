@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from itertools import izip
 
 
 def outlierCleaner(predictions, ages, net_worths):
@@ -14,7 +15,12 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
-
-    
-    return cleaned_data
+    for prediction, age, net_worth in izip(predictions, ages, net_worths):
+        error = net_worth[0] - prediction[0]
+        cleaned_data.append(
+            (age[0], net_worth[0], error)
+        )
+        # print(age, net_worth, abs(error))
+    cleaned_data.sort(key=lambda tup: tup[2], cmp=lambda x,y: int(abs(x) - abs(y)))
+    return cleaned_data[:int(len(cleaned_data)*0.9)]
 
