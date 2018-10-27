@@ -41,7 +41,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        # temp_counter += 1
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
             print path
@@ -54,13 +54,6 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             ### ["sara", "shackleton", "chris", "germani"]
             for w in ["sara", "shackleton", "chris", "germani"]:
                 parsed_text = parsed_text.replace(w, '')
-
-            parsed_text = ' '.join(
-                filter(
-                    lambda x: x != '',
-                    re.compile("[ \n\r]").split(parsed_text)
-                )
-            )
 
             ### append the text to word_data
             word_data.append(parsed_text)
@@ -84,4 +77,10 @@ print(word_data[152])
 
 ### in Part 4, do TfIdf vectorization here
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(stop_words="english")
+X = vectorizer.fit_transform(word_data)
+print("{0} different words".format(len(vectorizer.get_feature_names())))
 
+print("Word number 34597 is: {0}".format(
+    vectorizer.get_feature_names()[34597]))

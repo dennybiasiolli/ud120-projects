@@ -34,9 +34,7 @@ def parseOutText(f):
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
         stemmer = SnowballStemmer("english")
-        tmp_words = text_string.split(' ')
-        # removing empty words
-        tmp_words = filter(lambda w: w != '', tmp_words)
+        tmp_words = text_string.split()
         stemmed_words = map(lambda w: stemmer.stem(w), tmp_words)
         words = ' '.join(stemmed_words)
 
