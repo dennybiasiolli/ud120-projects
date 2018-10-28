@@ -55,4 +55,8 @@ while i < len(clf.feature_importances_):
         max_importance = clf.feature_importances_[i]
         ref_index = i
     i += 1
-print('Max importance: {0} on feature n.{1}'.format(max_importance, ref_index))
+print('Max importance: {0} on feature n.{1}: {2}'.format(
+    max_importance,
+    ref_index,
+    vectorizer.get_feature_names()[ref_index]
+))
