@@ -38,6 +38,7 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+import sys
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
@@ -45,3 +46,13 @@ clf = DecisionTreeClassifier()
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 print('Accuracy on test data: {0}'.format(accuracy_score(pred, labels_test)))
+
+max_importance = -sys.maxsize - 1
+ref_index = -1
+i = 0
+while i < len(clf.feature_importances_):
+    if clf.feature_importances_[i] > max_importance:
+        max_importance = clf.feature_importances_[i]
+        ref_index = i
+    i += 1
+print('Max importance: {0} on feature n.{1}'.format(max_importance, ref_index))
