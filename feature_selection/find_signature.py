@@ -50,13 +50,17 @@ print('Accuracy on test data: {0}'.format(accuracy_score(pred, labels_test)))
 max_importance = -sys.maxsize - 1
 ref_index = -1
 i = 0
+n_important_features = 0
 while i < len(clf.feature_importances_):
     if clf.feature_importances_[i] > max_importance:
         max_importance = clf.feature_importances_[i]
         ref_index = i
+    if clf.feature_importances_[i] > 0.2:
+        n_important_features += 1
     i += 1
 print('Max importance: {0} on feature n.{1}: {2}'.format(
     max_importance,
     ref_index,
     vectorizer.get_feature_names()[ref_index]
 ))
+print('Number of important features: {0}'.format(n_important_features))
