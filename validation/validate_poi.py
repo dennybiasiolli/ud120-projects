@@ -28,6 +28,7 @@ labels, features = targetFeatureSplit(data)
 
 
 ### it's all yours from here forward!  
+from sklearn.cross_validation import  train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 from time import time
@@ -41,3 +42,15 @@ t1 = time()
 pred = clf.predict(features)
 print("predict time:", round(time()-t1, 3), "s")
 print("accuracy:", accuracy_score(pred, labels))
+
+print("")
+x_train, x_test, y_train, y_test = train_test_split(
+    features, labels, test_size=0.3, random_state=42)
+clf = DecisionTreeClassifier()
+t0 = time()
+clf.fit(x_train, y_train)
+print("training time:", round(time()-t0, 3), "s")
+t1 = time()
+pred = clf.predict(x_test)
+print("predict time:", round(time()-t1, 3), "s")
+print("accuracy:", accuracy_score(pred, y_test))
