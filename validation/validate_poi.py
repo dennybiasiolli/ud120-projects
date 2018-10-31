@@ -28,5 +28,16 @@ labels, features = targetFeatureSplit(data)
 
 
 ### it's all yours from here forward!  
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+from time import time
 
 
+clf = DecisionTreeClassifier()
+t0 = time()
+clf.fit(features, labels)
+print("training time:", round(time()-t0, 3), "s")
+t1 = time()
+pred = clf.predict(features)
+print("predict time:", round(time()-t1, 3), "s")
+print("accuracy:", accuracy_score(pred, labels))
