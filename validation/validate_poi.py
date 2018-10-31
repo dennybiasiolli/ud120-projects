@@ -29,7 +29,7 @@ labels, features = targetFeatureSplit(data)
 
 ### it's all yours from here forward!  
 from sklearn.cross_validation import  train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.tree import DecisionTreeClassifier
 from time import time
 
@@ -54,3 +54,40 @@ t1 = time()
 pred = clf.predict(x_test)
 print("predict time:", round(time()-t1, 3), "s")
 print("accuracy:", accuracy_score(pred, y_test))
+
+print("POIs predicted: {0}".format(len(filter(lambda p: p == 1, pred))))
+print("Total people: {0}".format(len(y_test)))
+print("Accuracy if all '0' were predicted: {0}".format(
+    accuracy_score([0]*len(y_test), y_test))
+)
+print("True positives: {0}".format(
+    len(filter(lambda t: t[0] == t[1] == 1, zip(pred, y_test)))
+))
+
+print("Precision score: {0}".format(
+    precision_score(y_test, pred)
+))
+print("Recall score: {0}".format(
+    recall_score(y_test, pred)
+))
+
+predictions = [0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1]
+true_labels = [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0]
+print("True positives: {0}".format(
+    len(filter(lambda t: t[0] == t[1] == 1, zip(predictions, true_labels)))
+))
+print("True negatives: {0}".format(
+    len(filter(lambda t: t[0] == t[1] == 0, zip(predictions, true_labels)))
+))
+print("False positives: {0}".format(
+    len(filter(lambda t: t[0] == 1 and t[1] == 0, zip(predictions, true_labels)))
+))
+print("False negatives: {0}".format(
+    len(filter(lambda t: t[0] == 0 and t[1] == 1, zip(predictions, true_labels)))
+))
+print("Precision score: {0}".format(
+    precision_score(true_labels, predictions)
+))
+print("Recall score: {0}".format(
+    recall_score(true_labels, predictions)
+))
